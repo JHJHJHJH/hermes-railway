@@ -11,8 +11,16 @@ mkdir -p /data/.hermes/cron /data/.hermes/sessions /data/.hermes/logs \
          /data/.hermes/workspace /data/.hermes/skins /data/.hermes/plans \
          /data/.hermes/home
 
-if [ ! -f /data/.hermes/config.yaml ] && [ -f /opt/hermes-agent/cli-config.yaml.example ]; then
-  cp /opt/hermes-agent/cli-config.yaml.example /data/.hermes/config.yaml
+CONFIG_EXAMPLE=""
+for candidate in /opt/hermes/cli-config.yaml.example /opt/hermes-agent/cli-config.yaml.example; do
+  if [ -f "$candidate" ]; then
+    CONFIG_EXAMPLE="$candidate"
+    break
+  fi
+done
+
+if [ ! -f /data/.hermes/config.yaml ] && [ -n "$CONFIG_EXAMPLE" ]; then
+  cp "$CONFIG_EXAMPLE" /data/.hermes/config.yaml
 fi
 
 [ ! -f /data/.hermes/.env ] && touch /data/.hermes/.env

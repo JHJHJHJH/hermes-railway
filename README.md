@@ -1,24 +1,21 @@
 # Hermes Agent — Railway Template
 
-Deploy [Hermes Agent](https://github.com/NousResearch/hermes-agent) on [Railway](https://railway.app) with a web-based admin dashboard for configuration, gateway management, and user pairing.
+Deploy [Hermes Agent](https://github.com/NousResearch/hermes-agent) on [Railway](https://railway.app) behind a password-protected login that opens the native Hermes dashboard.
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/hermes-agent-ai?referralCode=QXdhdr&utm_medium=integration&utm_source=template&utm_campaign=generic)
+[![Deploy on Railway](https://railway.com/button.svg)]
 
 > Hermes Agent is an autonomous AI agent by [Nous Research](https://nousresearch.com/) that lives on your server, connects to your messaging channels (Telegram, Discord, Slack, etc.), and gets more capable the longer it runs.
 
-<!-- TODO: Add dashboard screenshot -->
+<!-- TODO: Add native dashboard screenshot -->
 <!-- ![Dashboard](docs/dashboard.png) -->
 
 ## Features
 
-- **Admin Dashboard** — dark-themed UI to configure providers, channels, tools, and manage the gateway
-- **One-Page Setup** — provider dropdown, checkbox-based channel/tool toggles — no config files to edit
-- **Gateway Management** — start, stop, restart the Hermes gateway from the browser
-- **Live Status** — stat cards for gateway state, uptime, model, and pending pairing requests
-- **Live Logs** — streaming gateway log viewer
-- **User Pairing** — approve or deny users who message your bot, revoke access anytime
-- **Basic Auth** — password-protected admin panel
-- **Reset Config** — one-click reset to start fresh
+- **Native Hermes Dashboard** — first-party Hermes UI for providers, skills, analytics, sessions, and chat
+- **Login Gate** — password-protected cookie auth in front of the dashboard
+- **Gateway Process** — managed as a subprocess and auto-started when provider/model config is complete
+- **Reverse Proxy** — forwards HTTP and dashboard WebSocket traffic through the Railway service port
+- **Persistent Config** — stores Hermes data under `/data/.hermes` for Railway volumes
 
 ## Getting Started
 
@@ -36,7 +33,7 @@ Hermes Agent interacts entirely through messaging channels — there is no chat 
 
 1. Open Telegram and message [@BotFather](https://t.me/BotFather)
 2. Send `/newbot`, follow the prompts, and copy the **Bot Token**
-3. Send a message to your new bot — it will appear as a pairing request in the admin dashboard
+3. Send a message to your new bot — it will appear as a pairing request in Hermes
 4. To find your Telegram user ID, message [@userinfobot](https://t.me/userinfobot)
 
 ### 3. Deploy to Railway
@@ -46,15 +43,15 @@ Hermes Agent interacts entirely through messaging channels — there is no chat 
 3. Attach a **volume** mounted at `/data` (persists config across redeploys)
 4. Open your app URL — log in with username `admin` and your password
 
-### 4. Configure in the Admin Dashboard
+### 4. Configure in Hermes
 
-1. **LLM Provider** — select OpenRouter from the dropdown, paste your API key, enter the model name
-2. **Messaging Channel** — check Telegram, paste the Bot Token from BotFather
-3. Click **Save & Start** — the gateway will start and your bot goes live
+1. Open your app URL and sign in
+2. Use the native Hermes dashboard to configure providers, models, tools, and channels
+3. Restart the Railway service after changing provider/model config if the gateway was not already running
 
 ### 5. Start Chatting
 
-Message your Telegram bot. If you're a new user, a pairing request will appear in the admin dashboard under **Users** — click **Approve**, and you're in.
+Message your Telegram bot. If you're a new user, approve the pairing request in Hermes, and you're in.
 
 <!-- TODO: Add Telegram chat screenshot -->
 <!-- ![Telegram Example](docs/telegram-example.png) -->
@@ -64,10 +61,10 @@ Message your Telegram bot. If you're a new user, a pairing request will appear i
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PORT` | `8080` | Web server port (set automatically by Railway) |
-| `ADMIN_USERNAME` | `admin` | Basic auth username |
-| `ADMIN_PASSWORD` | *(auto-generated)* | Basic auth password — if unset, a random password is printed to logs |
+| `ADMIN_USERNAME` | `admin` | Login username |
+| `ADMIN_PASSWORD` | *(auto-generated)* | Login password — if unset, a random password is printed to logs |
 
-All other configuration (LLM provider, model, channels, tools) is managed through the admin dashboard.
+All other configuration (LLM provider, model, channels, tools) is managed through Hermes.
 
 ## Supported Providers
 
@@ -85,14 +82,16 @@ Parallel (search), Firecrawl (scraping), Tavily (search), FAL (image gen), Brows
 
 ```
 Railway Container
-├── Python Admin Server (Starlette + Uvicorn)
-│   ├── /            — Admin dashboard (Basic Auth)
+├── Python Auth/Proxy Server (Starlette + Uvicorn)
+│   ├── /            — Native Hermes dashboard (cookie auth)
+│   ├── /login       — Login panel
 │   ├── /health      — Health check (no auth)
-│   └── /api/*       — Config, status, logs, gateway, pairing
+│   └── /setup       — Legacy URL redirect to /
+├── hermes dashboard — Native Hermes UI on loopback
 └── hermes gateway   — Managed as async subprocess
 ```
 
-The admin server runs on `$PORT` and manages the Hermes gateway as a child process. Config is stored in `/data/.hermes/.env` and `/data/.hermes/config.yaml`. Gateway stdout/stderr is captured into a ring buffer and streamed to the Logs panel.
+The auth/proxy server runs on `$PORT`, starts the native Hermes dashboard on loopback, and manages the Hermes gateway as a child process. Config is stored in `/data/.hermes/.env` and `/data/.hermes/config.yaml`.
 
 ## Running Locally
 
@@ -106,4 +105,3 @@ Open `http://localhost:8080` and log in with `admin` / `changeme`.
 ## Credits
 
 - [Hermes Agent](https://github.com/NousResearch/hermes-agent) by [Nous Research](https://nousresearch.com/)
-- UI inspired by [OpenClaw](https://github.com/praveen-ks-2001/openclaw-railway) admin template
