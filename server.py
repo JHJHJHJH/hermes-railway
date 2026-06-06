@@ -153,7 +153,7 @@ LOGIN_PAGE_HTML = """<!DOCTYPE html>
 *{box-sizing:border-box;margin:0;padding:0}
 html{min-height:100%;background:#090909}
 body{min-height:100vh;color:#f4f4f1;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  display:grid;grid-template-rows:72px 1fr 44px;background:
+  display:grid;grid-template-rows:64px 1fr 40px;background:
   radial-gradient(circle at 76% 36%,rgba(148,128,78,.16),transparent 36%),
   radial-gradient(circle at 18% 10%,rgba(100,137,140,.11),transparent 34%),
   linear-gradient(180deg,#111 0%,#080808 100%);overflow-x:hidden}
@@ -161,41 +161,41 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;ba
   linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
   linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
   radial-gradient(circle,rgba(255,255,255,.45) 1px,transparent 1px);
-  background-size:100% 72px,72px 100%,3px 3px;mix-blend-mode:screen}
+  background-size:100% 64px,64px 100%,3px 3px;mix-blend-mode:screen}
 body:after{content:"";position:fixed;inset:-20%;pointer-events:none;background:
   repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px);
   opacity:.22;transform:rotate(-6deg)}
-.topbar{height:72px;border-bottom:1px solid rgba(255,255,255,.22);display:flex;align-items:center;padding:0 28px;
+.topbar{height:64px;border-bottom:1px solid rgba(255,255,255,.22);display:flex;align-items:center;padding:0 24px;
   position:relative;z-index:1}
-.wordmark{font-family:Georgia,"Times New Roman",serif;font-weight:800;font-size:24px;line-height:.9;letter-spacing:.08em;text-transform:uppercase}
-.shell{position:relative;z-index:1;display:grid;place-items:center;padding:34px 20px;overflow:auto}
-.card{width:min(440px,100%);background:rgba(14,14,13,.78);border:1px solid rgba(255,255,255,.26);
-  box-shadow:0 24px 80px rgba(0,0,0,.55);padding:32px 32px 30px;backdrop-filter:blur(12px)}
-.brand{border-bottom:1px solid rgba(255,255,255,.18);padding-bottom:22px;margin-bottom:22px}
+.wordmark{font-family:Georgia,"Times New Roman",serif;font-weight:800;font-size:21px;line-height:.9;letter-spacing:.08em;text-transform:uppercase}
+.shell{position:relative;z-index:1;display:grid;place-items:center;padding:24px 18px;overflow:auto}
+.card{width:min(372px,100%);background:rgba(14,14,13,.78);border:1px solid rgba(255,255,255,.26);
+  box-shadow:0 20px 64px rgba(0,0,0,.5);padding:24px 24px 22px;backdrop-filter:blur(12px)}
+.brand{border-bottom:1px solid rgba(255,255,255,.18);padding-bottom:16px;margin-bottom:16px}
 .brand-kicker{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;color:#d3d3cf;
-  letter-spacing:.24em;text-transform:uppercase;margin-bottom:10px}
-.brand-logo{font-size:42px;line-height:1;font-weight:650;letter-spacing:0;color:#fff}
-.brand-sub{font-size:15px;line-height:1.55;color:#bebebb;margin-top:12px;max-width:34ch}
+  letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+.brand-logo{font-size:34px;line-height:1;font-weight:650;letter-spacing:0;color:#fff}
+.brand-sub{font-size:13px;line-height:1.45;color:#bebebb;margin-top:9px;max-width:34ch}
 label{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;color:#d6d6d1;
-  letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;margin-top:16px}
-input{width:100%;height:48px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.24);
-  color:#f7f7f3;font:600 16px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;padding:0 14px;outline:none;
+  letter-spacing:.18em;text-transform:uppercase;margin-bottom:7px;margin-top:13px}
+input{width:100%;height:42px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.24);
+  color:#f7f7f3;font:600 14px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;padding:0 12px;outline:none;
   transition:border-color .15s,background .15s,box-shadow .15s;border-radius:0}
 input:focus{border-color:#fff;background:rgba(255,255,255,.07);box-shadow:0 0 0 1px rgba(255,255,255,.18)}
-button{width:100%;height:54px;margin-top:26px;background:#f5f5f0;border:1px solid #fff;color:#111;border-radius:0;
-  font:800 14px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.28em;text-transform:uppercase;
+button{width:100%;height:46px;margin-top:20px;background:#f5f5f0;border:1px solid #fff;color:#111;border-radius:0;
+  font:800 12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.24em;text-transform:uppercase;
   cursor:pointer;transition:background .15s,color .15s,transform .15s,box-shadow .15s}
 button:hover{background:#fff;box-shadow:0 0 26px rgba(255,255,255,.16);transform:translateY(-1px)}
 .err{background:rgba(180,71,55,.16);border:1px solid rgba(235,121,91,.55);color:#ffd6ca;
   font:700 12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em;text-transform:uppercase;
-  padding:11px 12px;margin-bottom:16px;text-align:center}
-.footnote{margin-top:18px;font:600 11px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#aaa9a4;text-align:center;
+  padding:9px 10px;margin-bottom:13px;text-align:center}
+.footnote{margin-top:14px;font:600 10px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#aaa9a4;text-align:center;
   letter-spacing:.04em}
 .footnote code{color:#f2f2ed}
 .footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.16);display:flex;align-items:center;justify-content:space-between;
-  padding:0 28px;color:#c8c8c2;font:700 12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase}
-@media(max-width:560px){body{grid-template-rows:68px 1fr 40px}.topbar,.footer{padding-left:18px;padding-right:18px}
-  .wordmark{font-size:21px}.shell{padding:24px 16px}.card{padding:26px 22px}.brand-logo{font-size:34px}}
+  padding:0 24px;color:#c8c8c2;font:700 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase}
+@media(max-width:560px){body{grid-template-rows:60px 1fr 38px}.topbar,.footer{padding-left:16px;padding-right:16px}
+  .wordmark{font-size:19px}.shell{padding:18px 14px}.card{padding:22px 18px}.brand-logo{font-size:30px}}
 </style></head>
 <body>
 <header class="topbar"><div class="wordmark">Hermes<br>Agent</div></header>
