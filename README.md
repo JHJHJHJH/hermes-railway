@@ -2,12 +2,10 @@
 
 Deploy [Hermes Agent](https://github.com/NousResearch/hermes-agent) on [Railway](https://railway.app) behind a password-protected login that opens the native Hermes dashboard.
 
-[![Deploy on Railway](https://railway.com/button.svg)]
+![Deploy on Railway](https://railway.com/button.svg)
 
 > Hermes Agent is an autonomous AI agent by [Nous Research](https://nousresearch.com/) that lives on your server, connects to your messaging channels (Telegram, Discord, Slack, etc.), and gets more capable the longer it runs.
 
-<!-- TODO: Add native dashboard screenshot -->
-<!-- ![Dashboard](docs/dashboard.png) -->
 
 ## Features
 
@@ -53,9 +51,6 @@ Hermes Agent interacts entirely through messaging channels — there is no chat 
 
 Message your Telegram bot. If you're a new user, approve the pairing request in Hermes, and you're in.
 
-<!-- TODO: Add Telegram chat screenshot -->
-<!-- ![Telegram Example](docs/telegram-example.png) -->
-
 ## Environment Variables
 
 | Variable | Default | Description |
@@ -66,10 +61,6 @@ Message your Telegram bot. If you're a new user, approve the pairing request in 
 
 All other configuration (LLM provider, model, channels, tools) is managed through Hermes.
 
-## Supported Providers
-
-OpenRouter, DeepSeek, DashScope, GLM / Z.AI, Kimi, MiniMax, HuggingFace
-
 ## Supported Channels
 
 Telegram, Discord, Slack, WhatsApp, Email, Mattermost, Matrix
@@ -77,21 +68,6 @@ Telegram, Discord, Slack, WhatsApp, Email, Mattermost, Matrix
 ## Supported Tool Integrations
 
 Parallel (search), Firecrawl (scraping), Tavily (search), FAL (image gen), Browserbase, GitHub, OpenAI Voice (Whisper/TTS), Honcho (memory)
-
-## Architecture
-
-```
-Railway Container
-├── Python Auth/Proxy Server (Starlette + Uvicorn)
-│   ├── /            — Native Hermes dashboard (cookie auth)
-│   ├── /login       — Login panel
-│   ├── /health      — Health check (no auth)
-│   └── /setup       — Legacy URL redirect to /
-├── hermes dashboard — Native Hermes UI on loopback
-└── hermes gateway   — Managed as async subprocess
-```
-
-The auth/proxy server runs on `$PORT`, starts the native Hermes dashboard on loopback, and manages the Hermes gateway as a child process. Config is stored in `/data/.hermes/.env` and `/data/.hermes/config.yaml`.
 
 ## Running Locally
 
